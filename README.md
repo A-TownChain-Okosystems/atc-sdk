@@ -1,26 +1,40 @@
-# atc-sdk
+# ATC-SDK — Software Development Kit
 
-SDK für A-TownChain-Entwicklung — Integration in eigene Apps.
+SDK für A-TownChain OS — Libraries und Tools für DApp-Entwicklung.
 
-## Features (geplant)
-- Rust-Crate (`atc-sdk`) für Kernel/Blockchain-Interaktion
-- TypeScript-Package (`@atc/sdk`) für Web-Integration
-- Wallet-Integration (Sign, Verify, Encrypt)
-- Contract-Deployment und -Calls
-- Entity-CRUD (TypeScript)
-- P2P-Messaging
-- Event-Subscription (WebSocket)
+## Sprachen
+| Sprache | Library | Status |
+|---------|---------|--------|
+| TypeScript | `@atc/sdk-ts` | 📋 |
+| Python | `atc-sdk-py` | 📋 |
+| Rust | `atc-sdk-rs` | 📋 |
+| Go | `atc-sdk-go` | 📋 |
 
-## Build
-```bash
-# Rust
-cargo build
-# TypeScript
-npm run build
+## Features
+- **RPC Client** — Chain-RPC (JSON-RPC über TCP)
+- **Wallet Integration** — Key-Management, Signierung
+- **Contract SDK** — Deploy, Call, Query
+- **Event Subscription** — WebSocket Events
+- **Type Generation** — Auto-ABI → Type Bindings
+
+## Quick Start (TypeScript)
+```typescript
+import { AtcClient, Wallet } from '@atc/sdk-ts';
+
+const client = new AtcClient('http://localhost:9000');
+const wallet = Wallet.fromMnemonic('your mnemonic ...');
+
+const tx = await client.transfer({
+  to: 'ATCf9327118a7dfb30f72ba6aa82e1186078c42232884',
+  amount: 1000,
+  wallet
+});
+
+console.log('TX Hash:', tx.hash);
 ```
 
-## Status
-- Initial: Repo erstellt 05.08.2026
+## Verwandte Repos
+- [atc-wallet](https://github.com/A-TownChain-Okosystems/atc-wallet) — Wallet
+- [atc-cli](https://github.com/A-TownChain-Okosystems/atc-cli) — CLI Tool
 
----
-Copyright © Michael Wroblewski / A-TownChain-Okosystems. All Rights Reserved.
+[agent: aurora-base44-superagent-6a2756186106d6f0fbb105b5]
