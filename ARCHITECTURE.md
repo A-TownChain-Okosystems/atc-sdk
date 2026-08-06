@@ -1,70 +1,38 @@
-# 🌳 Architektur — atc-sdk
+# ARCHITECTURE.md — atc-sdk
+> Copyright © Michael Wroblewski / A-TownChain-Okosystems. All Rights Reserved.
 
-> **Stand:** 2026-08-06 | **Version:** v1.0.0
-> **Teil von:** [A-TownChain Ökosystem](https://github.com/A-TownChain-Okosystems)
-
-## Beschreibung
-
-SDK für ATCLang-Anwendungen. Client-Library, Type-Definitions, Utilities, API-Bindings.
-
-## Metadaten
-
-| Metrik | Wert |
-|--------|------|
-| Layer | L7 — Application |
-| Sprint | 3.0 |
-| ATC-Standards | ATC-24 |
-| Status | 🟠 Aufbau |
-| Code-Repo | [atc-sdk](https://github.com/A-TownChain-Okosystems/atc-sdk) |
-| Wiki-Repo | [atc-sdk-wiki](https://github.com/A-TownChain-Okosystems/atc-sdk-wiki) |
-
-## Komponenten-Übersicht
-
-| Komponente | Beschreibung | Status |
-|-----------|-------------|--------|
-| `client.atc` | ATC-Client: RPC calls, wallet, contracts, transactions | 📋 GEPLANT |
-| `types.atc` | Type-Definitions: Block, Tx, Header, Node, Contract, Event | 📋 GEPLANT |
-| `utils.atc` | Utilities: hashing, encoding, serialization, validation | 📋 GEPLANT |
-| `api_client.atc` | REST/WebSocket API-Client: endpoints, auth, pagination | 📋 GEPLANT |
-| `event_subscriber.atc` | Event-Subscriber: websocket, filter, subscription, replay | 📋 GEPLANT |
-| `contract_bindings.atc` | Contract-Bindings: ABI, type-safe calls, event decoding | 📋 GEPLANT |
-
-## Architektur-Baum
-
-```
-atc-sdk/
-├── README.md
-├── LICENSE
+## File Tree
+```tree
 ├── .gitignore
-├── STATUS.md
-├── ROADMAP.md
 ├── CHANGELOG.md
-├── ARCHITECTURE.md
+├── COMPONENT_PLAN.md
 ├── FILE_REGISTER.md
-├── client.atc
-├── types.atc
-├── utils.atc
+├── LICENSE
+├── README.md
+├── ROADMAP.md
+├── STATUS.md
 ├── api_client.atc
-├── event_subscriber.atc
+├── client.atc
 ├── contract_bindings.atc
+├── event_subscriber.atc
+├── rust/
+│   ├── Cargo.toml
+│   └── src/
+│       └── lib.rs
+├── types.atc
+├── typescript/
+│   ├── package.json
+│   └── src/
+└── utils.atc
 ```
 
-## Abhängigkeiten
+## Module Descriptions
+- **rust/src/lib.rs** & **rust/Cargo.toml**: Native Rust SDK library crate providing RPC client abstractions, binary transaction builders, and cryptographic key management.
+- **typescript/src/** & **typescript/package.json**: TypeScript SDK package offering Web3 providers, contract interaction bindings, and event streaming utilities.
+- Common SDK abstractions: RPC node client handlers, contract ABI binding generators, event subscriber sockets, and type definitions.
 
-- **ATCLang Stdlib** (atc-stdlib)
-- **ATC VM** (atc-vm)
-- **ATC Kernel** (atc-kernel)
+## Build System
+Dual build system: Cargo for Rust crate (`cargo build --release`) and npm / `tsc` for TypeScript library publishing (`npm run build`).
 
-## Roadmap
-
-| Phase | Aufgabe | Status |
-|-------|---------|--------|
-| Sprint 3.0 | Komponenten-Definition | ✅ ERLEDIGT |
-| Sprint 3.0 | Architektur-Baum | ✅ ERLEDIGT |
-| Sprint 3.0 | Stub-Dateien erstellen | 🔄 IN ARBEIT |
-| Sprint 3.0 | Implementierung | 📋 GEPLANT |
-| Sprint 3.0.1 | Tests | 📋 GEPLANT |
-| Sprint 3.0.2 | Dokumentation | 📋 GEPLANT |
-
----
-*Auto-generiert 2026-08-06 · Aurora (MasterBrain · Base44)*
+## Dependencies
+Rust (`tokio`, `serde`, `reqwest`, `ethers-core`), TypeScript (`axios`, `ethers`, `@types/node`).
