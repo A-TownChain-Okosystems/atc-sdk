@@ -1,8 +1,6 @@
 // Copyright (c) 2026 Michael Wroblewski / ShivaCore / A-TownChain-Okosystems. All Rights Reserved.
 use std::env;
 
-use atc_cli::*;
-
 fn print_help() {
     println!("atc-cli — A-TownChain-Okosystems");
     println!();
