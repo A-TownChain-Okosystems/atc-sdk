@@ -33,7 +33,7 @@ const max = canonicalSigningPreimage({
   payload: new Uint8Array(),
   poh_hash: new Uint8Array(32),
 });
-assert.equal(max.length, 16 + 8 + 1 + 4 + 10 + 1 + 4 + 13 + 16 + 16 + 8 + 8 + 8 + 4 + 32);
+assert.equal(max.length, 16 + 8 + 1 + 4 + 10 + 1 + 16 + 16 + 8 + 8 + 8 + 4 + 32);
 
 assert.throws(() => canonicalSigningPreimage({
   chain_id: ATC_CHAIN_ID,
