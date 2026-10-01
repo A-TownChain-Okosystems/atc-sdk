@@ -37,7 +37,7 @@ test("u128 maximum is encoded as exactly 16 bytes", () => {
 });
 
 test("u64 fields reject values above 64 bits", () => {
-  assert.throws(() => canonicalSigningPreimage(fixture()), /never/); // fixture itself is valid
+  assert.doesNotThrow(() => canonicalSigningPreimage(fixture()));
   assert.throws(
     () => canonicalSigningPreimage({ ...fixture(), gas_price: 2n ** 64n }),
     /u64 out of range/,
