@@ -1,6 +1,6 @@
 // Copyright (c) 2026 A-TownChain-Okosystems — Apache-2.0
 // Canonical L1 transaction signing primitives.
-// The byte layout MUST remain identical to the Rust L1 kernel signing_bytes().
+// The byte layout MUST remain identical to the Rust L1 wallet signing_bytes().
 
 export type NetworkId = "devnet" | "testnet" | "mainnet";
 export const ATC_CHAIN_ID = 658467 as const;
@@ -41,15 +41,27 @@ export function validateIdentity(identity: ChainIdentity): void {
   }
 }
 
-function pushU32BE(out: number[], value: number): void {
-  out.push((value >>> 24) & 0xff, (value >>> 16) & 0xff, (value >>> 8) & 0xff, value & 0xff);
+function pushUnsignedBE(out: number[], value: bigint, bytes: number): void {
+  const max = (1n << BigInt(bytes * 8)) - 1n;
+  if (value < 0n || value > max) throw new RangeError(`u${bytes * 8} out of range`);
+  for (let shift = BigInt((bytes - 1) * 8); shift >= 0n; shift -= 8n) {
+    out.push(Number((value >> shift) & 0xffn));
+  }
+}
+
+function pushU64BE(out: number[], value: bigint): void {
+  pushUnsignedBE(out, value, 8);
 }
 
 function pushU128BE(out: number[], value: bigint): void {
-  if (value < 0n || value > 0xffffffffffffffffn) throw new RangeError("u64 out of range");
-  for (let shift = 56n; shift >= 0n; shift -= 8n) {
-    out.push(Number((value >> shift) & 0xffn));
+  pushUnsignedBE(out, value, 16);
+}
+
+function pushU32BE(out: number[], value: number): void {
+  if (!Number.isSafeInteger(value) || value < 0 || value > 0xffffffff) {
+    throw new RangeError("u32 out of range");
   }
+  out.push((value >>> 24) & 0xff, (value >>> 16) & 0xff, (value >>> 8) & 0xff, value & 0xff);
 }
 
 function pushBytes(out: number[], value: Uint8Array): void {
@@ -71,7 +83,7 @@ function assert32Bytes(name: string, value: Uint8Array): void {
 }
 
 /**
- * Exact byte representation used by the Rust L1 kernel:
+ * Exact canonical byte representation:
  * ATC-TX-DOMAIN-V2 || chain_id(u64 BE) || tx_type(u8) ||
  * sender_did || recipient_did(optional) || amount(u128 BE, 16 bytes) ||
  * gas_price(u64 BE) || gas_limit(u64 BE) || nonce(u64 BE) ||
