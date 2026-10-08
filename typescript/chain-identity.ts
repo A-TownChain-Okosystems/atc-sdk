@@ -46,8 +46,8 @@ function pushU32BE(out: number[], value: number): void {
 }
 
 function pushU128BE(out: number[], value: bigint): void {
-  if (value < 0n || value > 0xffffffffffffffffn) throw new RangeError("u64 out of range");
-  for (let shift = 56n; shift >= 0n; shift -= 8n) {
+  if (value < 0n || value > 0xffffffffffffffffffffffffffffffffn) throw new RangeError("u128 out of range");
+  for (let shift = 120n; shift >= 0n; shift -= 8n) {
     out.push(Number((value >> shift) & 0xffn));
   }
 }
