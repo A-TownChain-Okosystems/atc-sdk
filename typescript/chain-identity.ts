@@ -82,8 +82,8 @@ function assert32Bytes(name: string, value: Uint8Array): void {
 /**
  * Exact byte representation used by the Rust L1 kernel:
  * ATC-TX-DOMAIN-V2 || chain_id(u64 BE) || tx_type(u8) ||
- * sender_did || recipient_did(optional) || amount(u128 BE) ||
- * gas_price(u128 BE) || gas_limit(u64 BE) || nonce(u64 BE) ||
+ * sender_did || recipient_did(optional) || amount(u128 BE, 16 bytes) ||
+ * gas_price(u128 BE, 16 bytes) || gas_limit(u64 BE) || nonce(u64 BE) ||
  * timestamp(u64 BE) || payload || poh_hash(32 bytes).
  */
 export function canonicalSigningPreimage(tx: TransactionSigningInput): Uint8Array {
