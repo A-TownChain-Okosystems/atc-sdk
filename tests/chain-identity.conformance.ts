@@ -26,14 +26,14 @@ const max = canonicalSigningPreimage({
   sender_did: "ATC-sender",
   recipient_did: null,
   amount: (1n << 128n) - 1n,
-  gas_price: (1n << 128n) - 1n,
+  gas_price: (1n << 64n) - 1n,
   gas_limit: 0n,
   nonce: 0n,
   timestamp: 0n,
   payload: new Uint8Array(),
   poh_hash: new Uint8Array(32),
 });
-assert.equal(max.length, 16 + 8 + 1 + 4 + 10 + 1 + 16 + 16 + 8 + 8 + 8 + 4 + 32);
+assert.equal(max.length, 16 + 8 + 1 + 4 + 10 + 1 + 16 + 8 + 8 + 8 + 8 + 4 + 32);
 
 assert.throws(() => canonicalSigningPreimage({
   chain_id: ATC_CHAIN_ID,
